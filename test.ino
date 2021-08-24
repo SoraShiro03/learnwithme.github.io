@@ -1,62 +1,70 @@
-int leftPhotoResister = A0;
-int rightPhotoResister = A1;
-int blueLed = 13;
-int redLed = 12;
+int ledFront = 10;
+int ledLeft = 11;
+int ledRight = 12;
+int ledBack = 13;
 
-int leftValue;
-int rightValue;
+int pRfront = A2;
+int pRleft =A3 ;
+int pRright = A0;
+int pRback = A1;
 
-void setup(){
-  pinMode(blueLed, OUTPUT);
-  pinMode(redLed, OUTPUT);
-  pinMode(leftPhotoResister, INPUT);
-  pinMode(rightPhotoResister, INPUT);
-  Serial.begin(9600);
-  
+int valueF; 
+int valueL;
+int valueR;
+int valueB;
+
+String myString(int value){
+  String newString = String(value);
+  return newString;
 }
 
-void loop(){
-  leftValue = analogRead(leftPhotoResister);
-  rightValue = analogRead(rightPhotoResister);
+ void setup () 
+ {
+  pinMode(ledFront, OUTPUT);
+  pinMode(ledLeft, OUTPUT);
+  pinMode(ledRight, OUTPUT);
+  pinMode(ledBack, OUTPUT); 
+  pinMode(pRfront, INPUT);
+  pinMode(pRleft, INPUT);
+  pinMode(pRright, INPUT);
+  pinMode(pRback, INPUT);
+Serial.begin(9600);
+ }
 
-  String leftString = String(leftValue);
-  String rightString = String(rightValue);
-  digitalWrite(blueLed, LOW);
-  digitalWrite(redLed, LOW);
-  
-  if(leftValue > rightValue){
-    digitalWrite(blueLed,HIGH);
-  }
-  else{
-    digitalWrite(redLed, HIGH);
-  }
+void loop()
+{
 
-//  if (leftValue < 50){
-//    digitalWrite(blueLed, LOW);
-//  }
-//  else{
-//    digitalWrite(blueLed, HIGH);
-//  }
-//
-//  
-//   if (rightValue < 50){
-//    digitalWrite(redLed, LOW);
-//  }
-//  else{
-//    digitalWrite(redLed, HIGH);
-//  }
+valueF = analogRead(pRfront);
+valueL = analogRead(pRleft);
+valueR = analogRead(pRright);
+valueB = analogRead(pRback);
+
+digitalWrite(ledFront, LOW );
+digitalWrite(ledLeft, LOW );
+digitalWrite(ledRight, LOW );
+digitalWrite(ledBack, LOW );
+//if (valueF > 500){
+//  digitalWrite(ledFront, HIGH);
+//}
+Serial.println("F: "+ myString(valueF));
+Serial.println("L: "+ myString(valueF));
+Serial.println("R: "+ myString(valueF));
+Serial.println("B: "+ myString(valueF));
+delay(500);
 
 
-  
-  Serial.println("left pResister value: " + leftString);
-  Serial.println("right pResister value: " + rightString);
-  if (leftValue > rightValue){
-    Serial.println("left pResister value > right");
-  }
-  else{
-    Serial.println("right pResister value > left ");
-  }
-  delay(500);
-  
-  
+if (valueF > valueL && valueF >  valueR &&  valueF > valueB){
+digitalWrite(ledFront, HIGH );
+}
+if(valueL > valueF && valueL >valueR &&valueL > valueB){
+digitalWrite(ledLeft,HIGH  );
+}
+if (valueR > valueL && valueR >valueF &&  valueR > valueB){
+digitalWrite(ledRight , HIGH );
+}
+else{
+digitalWrite(ledBack, HIGH  );
+}
+
+
 }
